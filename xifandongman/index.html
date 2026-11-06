@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>稀饭动漫-在线动画观看_新番连载与动漫分类浏览</title>
+<meta name="description" content="稀饭动漫是一个面向动画爱好者的动漫观看与浏览页面，提供新番连载、热门动画分类浏览与播放入口，帮助你快速找到想看的动画内容。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23ff7a45'/%3E%3Ccircle cx='32' cy='30' r='14' fill='%23fff3e6'/%3E%3Ccircle cx='26' cy='28' r='3' fill='%23ff7a45'/%3E%3Ccircle cx='38' cy='28' r='3' fill='%23ff7a45'/%3E%3Cpath d='M24 38c5 5 11 5 16 0' stroke='%23ff7a45' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --orange:#ff7a45;
+    --orange-deep:#e85f2a;
+    --cream:#fff8f2;
+    --ink:#2c2320;
+    --ink-soft:#6b5d56;
+    --line:#f0e3d8;
+    --card:#ffffff;
+    --radius:18px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none;}
+  img,svg{display:block;max-width:100%;}
+  .wrap{width:min(1120px,92vw);margin:0 auto;}
+
+  /* header */
+  header.site{
+    position:sticky;top:0;z-index:50;
+    background:rgba(255,248,242,.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-row{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;padding:14px 0;
+  }
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand-mark{
+    width:40px;height:40px;border-radius:12px;
+    background:linear-gradient(140deg,#ff9067,#ff6a2f);
+    display:grid;place-items:center;
+    box-shadow:0 6px 14px rgba(255,106,47,.28);
+    flex:none;
+  }
+  .brand-text{
+    font-size:1.18rem;font-weight:800;letter-spacing:.5px;color:var(--ink);
+  }
+  nav.main ul{
+    display:flex;gap:22px;list-style:none;font-size:.95rem;font-weight:600;color:var(--ink-soft);
+  }
+  nav.main a{position:relative;padding:4px 0;transition:color .2s;}
+  nav.main a:hover{color:var(--orange-deep);}
+  nav.main a::after{
+    content:"";position:absolute;left:0;bottom:-2px;height:2px;width:0;
+    background:var(--orange);border-radius:2px;transition:width .25s;
+  }
+  nav.main a:hover::after{width:100%;}
+  .nav-cta{
+    background:var(--orange);color:#fff;font-weight:700;font-size:.9rem;
+    padding:9px 18px;border-radius:999px;white-space:nowrap;
+    box-shadow:0 6px 16px rgba(255,122,69,.32);transition:transform .2s,background .2s;
+  }
+  .nav-cta:hover{background:var(--orange-deep);transform:translateY(-1px);}
+
+  /* hero */
+  .hero{padding:56px 0 40px;position:relative;overflow:hidden;}
+  .hero-grid{
+    display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:center;
+  }
+  .hero-tag{
+    display:inline-flex;align-items:center;gap:8px;
+    background:#fff0e6;color:var(--orange-deep);
+    font-size:.82rem;font-weight:700;padding:6px 14px;border-radius:999px;
+    margin-bottom:18px;
+  }
+  h1{
+    font-size:clamp(2rem,4.6vw,3.05rem);
+    line-height:1.2;font-weight:900;letter-spacing:1px;
+    color:var(--ink);
+  }
+  h1 .hl{color:var(--orange-deep);}
+  .hero-lead{
+    margin-top:18px;font-size:1.02rem;color:var(--ink-soft);max-width:34em;
+  }
+  .hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:26px;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    font-weight:700;font-size:.95rem;padding:13px 24px;border-radius:999px;
+    transition:transform .2s,box-shadow .2s,background .2s;
+  }
+  .btn-primary{
+    background:var(--orange);color:#fff;box-shadow:0 10px 22px rgba(255,122,69,.34);
+  }
+  .btn-primary:hover{background:var(--orange-deep);transform:translateY(-2px);}
+  .btn-ghost{
+    background:#fff;color:var(--ink);border:1.5px solid var(--line);
+  }
+  .btn-ghost:hover{border-color:var(--orange);color:var(--orange-deep);}
+  .hero-stats{
+    display:flex;gap:30px;margin-top:34px;flex-wrap:wrap;
+  }
+  .hero-stats div span{
+    display:block;font-size:1.35rem;font-weight:900;color:var(--orange-deep);
+  }
+  .hero-stats div small{font-size:.82rem;color:var(--ink-soft);}
+
+  .hero-art{
+    position:relative;border-radius:26px;background:#fff;
+    border:1px solid var(--line);padding:22px;
+    box-shadow:0 24px 50px rgba(210,150,110,.16);
+  }
+  .hero-art .screen{
+    border-radius:16px;overflow:hidden;background:linear-gradient(160deg,#ffe6d6,#ffd0b6);
+    aspect-ratio:16/10;display:grid;place-items:center;
+  }
+  .hero-art .meta{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-top:14px;font-size:.84rem;color:var(--ink-soft);
+  }
+  .pill{
+    background:#fff0e6;color:var(--orange-deep);font-weight:700;
+    padding:4px 12px;border-radius:999px;font-size:.78rem;
+  }
+
+  /* section base */
+  section.block{padding:52px 0;}
+  .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:26px;flex-wrap:wrap;}
+  .sec-head h2{
+    font-size:1.55rem;font-weight:900;letter-spacing:.5px;
+  }
+  .sec-head h2::before{
+    content:"";display:inline-block;width:8px;height:20px;border-radius:4px;
+    background:var(--orange);margin-right:12px;vertical-align:-2px;
+  }
+  .sec-head p{font-size:.9rem;color:var(--ink-soft);max-width:42em;}
+
+  /* category */
+  .cats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+  .cat{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px 20px;transition:transform .22s,box-shadow .22s,border-color .22s;
+  }
+  .cat:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(210,150,110,.18);border-color:#ffd6bd;}
+  .cat .ico{
+    width:44px;height:44px;border-radius:12px;background:#fff0e6;
+    display:grid;place-items:center;margin-bottom:14px;
+  }
+  .cat h3{font-size:1.02rem;font-weight:800;margin-bottom:6px;}
+  .cat p{font-size:.84rem;color:var(--ink-soft);line-height:1.6;}
+
+  /* list */
+  .show-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .show{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    overflow:hidden;transition:transform .22s,box-shadow .22s;
+  }
+  .show:hover{transform:translateY(-4px);box-shadow:0 18px 34px rgba(210,150,110,.18);}
+  .show .cover{aspect-ratio:3/2;overflow:hidden;background:#ffe9db;}
+  .show .body{padding:16px 18px 18px;}
+  .show .body h3{font-size:1rem;font-weight:800;margin-bottom:6px;}
+  .show .body p{font-size:.84rem;color:var(--ink-soft);}
+  .tags{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;}
+  .tag{font-size:.74rem;font-weight:700;color:var(--orange-deep);background:#fff0e6;padding:3px 10px;border-radius:999px;}
+
+  /* schedule */
+  .schedule{
+    background:var(--card);border:1px solid var(--line);border-radius:24px;
+    padding:28px;display:grid;grid-template-columns:repeat(7,1fr);gap:12px;
+  }
+  .day{
+    border-radius:14px;padding:16px 10px;text-align:center;
+    background:var(--cream);border:1px solid var(--line);
+  }
+  .day.today{background:var(--orange);color:#fff;border-color:var(--orange);box-shadow:0 10px 20px rgba(255,122,69,.3);}
+  .day b{display:block;font-size:.95rem;margin-bottom:6px;}
+  .day small{font-size:.76rem;display:block;line-height:1.55;opacity:.85;}
+
+  /* about */
+  .about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:34px;align-items:start;}
+  .about-text p{font-size:.96rem;color:var(--ink-soft);margin-bottom:14px;}
+  .about-text p strong{color:var(--ink);}
+  .about-panel{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;
+  }
+  .about-panel h3{font-size:1.05rem;font-weight:800;margin-bottom:14px;}
+  .about-panel ul{list-style:none;display:grid;gap:12px;}
+  .about-panel li{display:flex;gap:10px;font-size:.9rem;color:var(--ink-soft);}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--orange);flex:none;margin-top:9px;}
+
+  /* faq */
+  .faq{display:grid;gap:14px;}
+  .faq details{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:16px 20px;
+  }
+  .faq summary{
+    cursor:pointer;font-weight:800;font-size:.96rem;list-style:none;
+    display:flex;justify-content:space-between;align-items:center;gap:12px;
+  }
+  .faq summary::-webkit-details-marker{display:none;}
+  .faq summary::after{content:"+";color:var(--orange);font-size:1.2rem;font-weight:900;}
+  .faq details[open] summary::after{content:"−";}
+  .faq p{margin-top:10px;font-size:.9rem;color:var(--ink-soft);}
+
+  /* cta band */
+  .band{
+    background:linear-gradient(120deg,#ff8a5c,#ff6a2f);
+    border-radius:26px;padding:40px 36px;color:#fff;
+    display:flex;align-items:center;justify-content:space-between;gap:26px;flex-wrap:wrap;
+    box-shadow:0 22px 44px rgba(255,106,47,.28);
+  }
+  .band h2{font-size:1.5rem;font-weight:900;letter-spacing:.5px;}
+  .band p{font-size:.92rem;opacity:.92;margin-top:8px;max-width:38em;}
+  .band .btn{background:#fff;color:var(--orange-deep);box-shadow:none;}
+  .band .btn:hover{background:#fff4ec;}
+
+  /* footer */
+  footer.site{
+    margin-top:56px;background:#2c2320;color:#cdbfb7;padding:44px 0 26px;
+  }
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:32px;padding-bottom:28px;border-bottom:1px solid rgba(255,255,255,.1);}
+  .foot-brand{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+  .foot-brand .brand-mark{box-shadow:none;}
+  .foot-brand span{font-weight:800;color:#fff;font-size:1.05rem;}
+  footer p{font-size:.86rem;line-height:1.8;color:#a99a92;}
+  footer h4{font-size:.9rem;font-weight:800;color:#fff;margin-bottom:12px;}
+  footer ul{list-style:none;display:grid;gap:8px;font-size:.86rem;}
+  footer ul a:hover{color:#ffb894;}
+  .copyright{padding-top:20px;font-size:.8rem;color:#8d7f78;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+
+  /* responsive */
+  @media (max-width:960px){
+    .hero-grid{grid-template-columns:1fr;gap:32px;}
+    .hero-art{order:-1;}
+    .cats{grid-template-columns:repeat(2,1fr);}
+    .show-grid{grid-template-columns:repeat(2,1fr);}
+    .about-grid{grid-template-columns:1fr;}
+    .schedule{grid-template-columns:repeat(4,1fr);}
+    .foot-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:700px){
+    nav.main{display:none;}
+    .nav-row{padding:12px 0;}
+    .hero{padding:32px 0 26px;}
+    .hero-stats{gap:20px;}
+    .section.block{padding:38px 0;}
+    .show-grid{grid-template-columns:1fr;}
+    .schedule{grid-template-columns:repeat(2,1fr);padding:20px;}
+    .band{padding:28px 22px;}
+    .foot-grid{grid-template-columns:1fr;gap:24px;}
+    .sec-head h2{font-size:1.3rem;}
+  }
+  @media (max-width:400px){
+    .cats{grid-template-columns:1fr;}
+  }
+</style>
+    <script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav-row">
+    <a href="#top" class="brand" aria-label="稀饭动漫首页">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="11" r="6.4" fill="#fff3e6"/>
+          <circle cx="9.8" cy="10.2" r="1.2" fill="#ff6a2f"/>
+          <circle cx="14.2" cy="10.2" r="1.2" fill="#ff6a2f"/>
+          <path d="M9 13.4c1.9 1.9 4.1 1.9 6 0" stroke="#ff6a2f" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="brand-text">稀饭动漫</span>
+    </a>
+    <nav class="main" aria-label="主导航">
+      <ul>
+        <li><a href="#catalog">动画分类</a></li>
+        <li><a href="#hot">热门连载</a></li>
+        <li><a href="#schedule">更新日历</a></li>
+        <li><a href="#about">关于本站</a></li>
+        <li><a href="#faq">常见问题</a></li>
+      </ul>
+    </nav>
+    <a href="#hot" class="nav-cta">开始观看</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="hero-tag">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#e85f2a"><path d="M12 2l2.6 6.6L21 11l-6.4 2.4L12 20l-2.6-6.6L3 11l6.4-2.4z"/></svg>
+          动画追番 · 每日更新
+        </span>
+        <h1>稀饭动漫</h1>
+        <p class="hero-lead">稀饭动漫是一个面向动画爱好者的观看与浏览页面。这里按新番连载、类型分类和更新日历组织内容，你可以从首屏直接进入正在更新的动画，也能按标签快速筛选自己想看的题材。</p>
+        <div class="hero-actions">
+          <a href="#hot" class="btn btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg>
+            浏览热门连载
+          </a>
+          <a href="#catalog" class="btn btn-ghost">按分类查找</a>
+        </div>
+        <div class="hero-stats">
+          <div><span>7</span><small>每周更新日</small></div>
+          <div><span>6</span><small>动画类型分区</small></div>
+          <div><span>24h</span><small>页面随时可访问</small></div>
+        </div>
+      </div>
+
+      <div class="hero-art" aria-hidden="true">
+        <div class="screen">
+          <svg width="220" height="140" viewBox="0 0 220 140" fill="none">
+            <rect x="18" y="16" width="184" height="108" rx="12" fill="#fff5ee"/>
+            <circle cx="110" cy="66" r="30" fill="#ffd0b6"/>
+            <circle cx="100" cy="61" r="4" fill="#ff6a2f"/>
+            <circle cx="120" cy="61" r="4" fill="#ff6a2f"/>
+            <path d="M98 78c8 8 16 8 24 0" stroke="#ff6a2f" stroke-width="3.4" stroke-linecap="round"/>
+            <path d="M60 24l6 10 10 3-10 3-6 10-6-10-10-3 10-3z" fill="#ffb894"/>
+            <path d="M164 90l4 7 7 2-7 2-4 7-4-7-7-2 7-2z" fill="#ffb894"/>
+            <rect x="30" y="100" width="52" height="7" rx="3.5" fill="#ffd0b6"/>
+          </svg>
+        </div>
+        <div class="meta">
+          <span>今日推荐 · 连载动画</span>
+          <span class="pill">正在更新</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="catalog">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <h2>动画分类浏览</h2>
+          <p>分类是从内容出发的入口。先确定题材方向，再进入具体作品页，比盲目翻列表更省时间。</p>
+        </div>
+      </div>
+      <div class="cats">
+        <article class="cat">
+          <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ff6a2f" stroke-width="1.8" stroke-linecap="round"><path d="M12 3l2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5z"/></svg></div>
+          <h3>热血冒险</h3>
+          <p>以成长与战斗为主线的长篇连载，适合连续追更。</p>
+        </article>
+        <article class="cat">
+          <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ff6a2f" stroke-width="1.8" stroke-linecap="round"><path d="M12 20s-7-4.4-7-9a4 4 0 017-2.6A4 4 0 0119 11c0 4.6-7 9-7 9z"/></svg></div>
+          <h3>日常治愈</h3>
+          <p>节奏舒缓的生活向作品，适合碎片时间观看。</p>
+        </article>
+        <article class="cat">
+          <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ff6a2f" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></div>
+          <h3>科幻悬疑</h3>
+          <p>设定复杂、线索密集，适合一次性连看数集。</p>
+        </article>
+        <article class="cat">
+          <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ff6a2f" stroke-width="1.8" stroke-linecap="round"><path d="M4 19V9l8-5 8 5v10"/><path d="M9 19v-5h6v5"/></svg></div>
+          <h3>校园青春</h3>
+          <p>以社团、校园生活为背景，人物关系是看点。</p>
+        </article>
+        <article class="cat">
+          <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ff6a2f" stroke-width="1.8" stroke-linecap="round"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg></div>
+          <h3>奇幻异世界</h3>
+          <p>世界观设定丰富，常有改编自轻小说的作品。</p>
+        </article>
+        <article class="cat">
+          <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ff6a2f" stroke-width="1.8" stroke-linecap="round"><rect x="4" y="5" width="16" height="14" rx="3"/><path d="M8 10h8M8 14h5"/></svg></div>
+          <h3>剧场版动画</h3>
+          <p>单集完整的电影形态作品，适合周末整段观看。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="hot">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <h2>热门连载与推荐</h2>
+          <p>以下条目按题材与更新节奏排列，便于在稀饭动漫中找到近期值得跟进的作品。</p>
+        </div>
+        <a href="#schedule" class="btn btn-ghost">查看更新日历</a>
+      </div>
+      <div class="show-grid">
+        <article class="show">
+          <div class="cover">
+            <svg width="100%" height="100%" viewBox="0 0 300 200" fill="none" preserveAspectRatio="xMidYMid slice">
+              <rect width="300" height="200" fill="#ffe0cc"/>
+              <circle cx="150" cy="92" r="46" fill="#ffb894"/>
+              <circle cx="134" cy="84" r="5" fill="#ff6a2f"/>
+              <circle cx="166" cy="84" r="5" fill="#ff6a2f"/>
+              <path d="M132 104c10 9 26 9 36 0" stroke="#ff6a2f" stroke-width="4" stroke-linecap="round"/>
+              <path d="M52 40l6 12 12 3-12 3-6 12-6-12-12-3 12-3z" fill="#fff5ee"/>
+            </svg>
+          </div>
+          <div class="body">
+            <h3>星轨旅人</h3>
+            <p>少年在漂浮群岛上寻找失落航线，旅途中逐渐拼起旧世界的记忆。</p>
+            <div class="tags"><span class="tag">奇幻</span><span class="tag">连载中</span></div>
+          </div>
+        </article>
+        <article class="show">
+          <div class="cover">
+            <svg width="100%" height="100%" viewBox="0 0 300 200" fill="none" preserveAspectRatio="xMidYMid slice">
+              <rect width="300" height="200" fill="#ffeadd"/>
+              <rect x="70" y="54" width="160" height="100" rx="16" fill="#fff5ee"/>
+              <path d="M110 104l20 14 40-30" stroke="#ff6a2f" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+          </div>
+          <div class="body">
+            <h3>放学后编辑部</h3>
+            <p>四名高中生用校刊记录校园小事，日常章节节奏轻快，适合随时打开。</p>
+            <div class="tags"><span class="tag">日常</span><span class="tag">治愈</span></div>
+          </div>
+        </article>
+        <article class="show">
+          <div class="cover">
+            <svg width="100%" height="100%" viewBox="0 0 300 200" fill="none" preserveAspectRatio="xMidYMid slice">
+              <rect width="300" height="200" fill="#ffdcc6"/>
+              <circle cx="150" cy="100" r="52" stroke="#ff6a2f" stroke-width="6" fill="none"/>
+              <circle cx="150" cy="100" r="26" stroke="#ff6a2f" stroke-width="6" fill="none"/>
+              <circle cx="150" cy="100" r="7" fill="#ff6a2f"/>
+            </svg>
+          </div>
+          <div class="body">
+            <h3>第七号观测站</h3>
+            <p>深山观测站收到来源不明的信号，悬疑线索层层推进，适合连续观看。</p>
+            <div class="tags"><span class="tag">科幻</span><span class="tag">悬疑</span></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="schedule">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <h2>每周更新日历</h2>
+          <p>按星期安排追番顺序，可以避免在同一天堆叠过多剧集。稀饭动漫的日历区仅展示更新节奏，不涉及具体播出时间承诺。</p>
+        </div>
+      </div>
+      <div class="schedule">
+        <div class="day"><b>周一</b><small>日常向<br>2 部</small></div>
+        <div class="day"><b>周二</b><small>热血向<br>3 部</small></div>
+        <div class="day today"><b>周三</b><small>奇幻向<br>2 部</small></div>
+        <div class="day"><b>周四</b><small>悬疑向<br>1 部</small></div>
+        <div class="day"><b>周五</b><small>校园向<br>3 部</small></div>
+        <div class="day"><b>周六</b><small>剧场版<br>1 部</small></div>
+        <div class="day"><b>周日</b><small>合集重温</small></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="about">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <h2>关于稀饭动漫</h2>
+          <p>了解页面定位与内容组织方式，判断它是否适合你的观看习惯。</p>
+        </div>
+      </div>
+      <div class="about-grid">
+        <div class="about-text">
+          <p><strong>稀饭动漫的定位</strong>是动画浏览与观看入口，而不是资讯门户。页面把有限的位置留给分类、连载条目和更新日历，让访问者从进入首页到打开作品页的路径尽量短。</p>
+          <p>在内容组织上，稀饭动漫先按题材分区，再以连载状态标记作品。这样处理的理由是：多数访问者进入动画站点时已有大致方向，例如想看日常治愈或科幻悬疑，分类能直接承接这种需求。</p>
+          <p>更新日历承担的是追番节奏的安排任务。它并不替代作品页，而是帮助访问者判断同一周内哪些内容值得优先观看，减少在多部连载之间来回切换的成本。</p>
+          <p>站内不设账号体系与评分排行，也不对作品质量作评价性结论。所有条目信息以页面上呈现的题材、状态和简介为准，具体更新情况以实际内容为准。</p>
+        </div>
+        <aside class="about-panel">
+          <h3>页面提供什么</h3>
+          <ul>
+            <li><span class="dot"></span><span>按题材划分的动画分类入口，便于定向查找。</span></li>
+            <li><span class="dot"></span><span>热门连载条目，附题材标签与连载状态。</span></li>
+            <li><span class="dot"></span><span>每周更新日历，用于安排追番顺序。</span></li>
+            <li><span class="dot"></span><span>常见问题说明，解释页面能做什么、不做什么。</span></li>
+          </ul>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="faq">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <h2>常见问题</h2>
+          <p>关于浏览与使用方式的几个直接回答。</p>
+        </div>
+      </div>
+      <div class="faq">
+        <details open>
+          <summary>稀饭动漫需要注册账号吗？</summary>
+          <p>不需要。页面以浏览和分类查找为主，不设账号体系，打开页面即可查看分类、连载条目与更新日历。</p>
+        </details>
+        <details>
+          <summary>分类和连载条目分别解决什么问题？</summary>
+          <p>分类解决“想看某类题材”的问题，连载条目解决“近期有哪些在更新的作品”的问题。两者是不同入口，可以配合使用。</p>
+        </details>
+        <details>
+          <summary>更新日历显示的时间准确吗？</summary>
+          <p>日历按星期展示更新节奏，用于安排观看顺序，不承诺具体播出时刻。实际更新以作品页呈现为准。</p>
+        </details>
+        <details>
+          <summary>页面会给出作品评分或推荐排序吗？</summary>
+          <p>不会。页面只呈现题材、状态与简介等基础信息，不对作品质量下评价性结论，排序也不代表优劣判断。</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="band">
+        <div>
+          <h2>从分类开始，找到下一部要追的动画</h2>
+          <p>稀饭动漫把分类、连载与更新日历放在同一条浏览路径上。先选题材，再看连载状态，最后按星期安排观看顺序。</p>
+        </div>
+        <a href="#catalog" class="btn">进入动画分类</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">
+          <span class="brand-mark" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="11" r="6.4" fill="#fff3e6"/>
+              <circle cx="9.8" cy="10.2" r="1.2" fill="#ff6a2f"/>
+              <circle cx="14.2" cy="10.2" r="1.2" fill="#ff6a2f"/>
+              <path d="M9 13.4c1.9 1.9 4.1 1.9 6 0" stroke="#ff6a2f" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <span>稀饭动漫</span>
+        </div>
+        <p>面向动画爱好者的浏览与观看入口，按题材分类、连载状态与更新节奏组织内容，帮助访问者更快确定观看方向。</p>
+      </div>
+      <div>
+        <h4>浏览入口</h4>
+        <ul>
+          <li><a href="#catalog">动画分类</a></li>
+          <li><a href="#hot">热门连载</a></li>
+          <li><a href="#schedule">更新日历</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>站点说明</h4>
+        <ul>
+          <li><a href="#about">关于稀饭动漫</a></li>
+          <li><a href="#faq">常见问题</a></li>
+          <li><a href="#top">返回顶部</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="copyright">
+      <span>稀饭动漫 · 动画浏览与分类入口</span>
+      <span>页面内容以分类、连载与更新节奏信息为主</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+                </html>

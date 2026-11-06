@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>糖心社区-糖心社区热门内容_社区话题与创作者动态</title>
+<meta name="description" content="糖心社区是一个聚合热门内容、社区话题与创作者动态的浏览型社区首页。在这里可以按分类浏览糖心社区的热点帖子、话题讨论与创作者更新，快速找到感兴趣的内容与讨论入口。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ff6f91'/%3E%3Cstop offset='1' stop-color='%23ff9770'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Cpath d='M32 50C20 42 12 34 12 25a10 10 0 0 1 20-4 10 10 0 0 1 20 4c0 9-8 17-20 25z' fill='%23fff' opacity='.92'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --candy:#ff5d7a;
+    --candy-soft:#ffe3e9;
+    --peach:#ff9770;
+    --ink:#241b22;
+    --ink-2:#5a4b54;
+    --line:#f0dfe4;
+    --bg:#fff8f9;
+    --card:#ffffff;
+    --radius:18px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none;}
+  img,svg{display:block;max-width:100%;}
+  .wrap{width:min(1120px,92vw);margin:0 auto;}
+
+  /* ---------- header ---------- */
+  header.site{
+    position:sticky;top:0;z-index:50;
+    background:rgba(255,248,249,.88);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-row{
+    display:flex;align-items:center;gap:24px;
+    min-height:68px;
+  }
+  .logo{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+  .logo svg{width:34px;height:34px;}
+  .logo .brand{
+    font-size:19px;font-weight:800;letter-spacing:.5px;
+    background:linear-gradient(100deg,var(--candy),var(--peach));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    white-space:nowrap;
+  }
+  nav.main{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+  nav.main a{
+    font-size:14.5px;color:var(--ink-2);padding:7px 12px;border-radius:999px;
+    transition:.2s;white-space:nowrap;
+  }
+  nav.main a:hover{background:var(--candy-soft);color:var(--candy);}
+  .nav-cta{
+    font-size:14px;font-weight:700;color:#fff;
+    background:linear-gradient(100deg,var(--candy),var(--peach));
+    padding:9px 18px;border-radius:999px;white-space:nowrap;
+    transition:.2s;box-shadow:0 6px 16px rgba(255,93,122,.28);
+  }
+  .nav-cta:hover{transform:translateY(-1px);box-shadow:0 9px 20px rgba(255,93,122,.36);}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;overflow:hidden;
+    padding:56px 0 48px;
+  }
+  .hero::before{
+    content:"";position:absolute;inset:0;z-index:-1;
+    background:
+      radial-gradient(560px 320px at 82% 8%,rgba(255,151,112,.22),transparent 70%),
+      radial-gradient(520px 300px at 8% 90%,rgba(255,93,122,.18),transparent 72%);
+  }
+  .hero-grid{
+    display:grid;grid-template-columns:1.35fr .85fr;gap:44px;align-items:center;
+  }
+  .badge{
+    display:inline-flex;align-items:center;gap:7px;
+    font-size:12.5px;font-weight:600;color:var(--candy);
+    background:#fff;border:1px solid var(--line);
+    padding:5px 13px;border-radius:999px;margin-bottom:18px;
+    box-shadow:0 4px 12px rgba(255,93,122,.08);
+  }
+  .badge i{width:7px;height:7px;border-radius:50%;background:var(--candy);display:inline-block;animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  h1{
+    font-size:clamp(30px,4.4vw,46px);
+    line-height:1.22;font-weight:900;letter-spacing:.5px;
+    background:linear-gradient(100deg,#2b2027 30%,var(--candy) 78%,var(--peach));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    margin-bottom:18px;
+  }
+  .hero p.lead{
+    font-size:16px;color:var(--ink-2);max-width:34em;margin-bottom:26px;
+  }
+  .hero-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center;}
+  .btn-primary{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:15px;font-weight:700;color:#fff;
+    background:linear-gradient(100deg,var(--candy),var(--peach));
+    padding:13px 26px;border-radius:999px;
+    box-shadow:0 10px 24px rgba(255,93,122,.3);
+    transition:.2s;
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(255,93,122,.4);}
+  .btn-ghost{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:15px;font-weight:600;color:var(--ink);
+    background:#fff;border:1px solid var(--line);
+    padding:12px 24px;border-radius:999px;transition:.2s;
+  }
+  .btn-ghost:hover{border-color:var(--candy);color:var(--candy);}
+  .hero-figure{
+    background:var(--card);border:1px solid var(--line);border-radius:26px;
+    padding:22px;box-shadow:0 24px 50px rgba(255,93,122,.13);
+  }
+  .hero-figure svg{width:100%;height:auto;border-radius:16px;}
+  .hero-note{
+    display:flex;justify-content:space-between;gap:12px;
+    font-size:12.5px;color:var(--ink-2);margin-top:16px;padding-top:14px;
+    border-top:1px dashed var(--line);
+  }
+  .hero-note strong{display:block;font-size:17px;color:var(--ink);font-weight:800;}
+
+  /* ---------- section base ---------- */
+  section{padding:52px 0;}
+  .sec-head{margin-bottom:28px;max-width:44em;}
+  .sec-head .kicker{
+    font-size:12.5px;font-weight:700;letter-spacing:1.6px;
+    color:var(--candy);text-transform:uppercase;margin-bottom:8px;
+  }
+  .sec-head h2{
+    font-size:clamp(21px,2.6vw,27px);font-weight:800;letter-spacing:.3px;
+  }
+  .sec-head p{font-size:14.5px;color:var(--ink-2);margin-top:9px;}
+
+  /* ---------- topics ---------- */
+  .topic-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:18px;
+  }
+  .topic{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px 20px;transition:.22s;position:relative;overflow:hidden;
+  }
+  .topic::after{
+    content:"";position:absolute;top:-40px;right:-40px;width:100px;height:100px;
+    border-radius:50%;background:var(--candy-soft);opacity:.55;transition:.3s;
+  }
+  .topic:hover{transform:translateY(-3px);border-color:#ffc9d4;box-shadow:0 16px 34px rgba(255,93,122,.12);}
+  .topic:hover::after{transform:scale(1.4);opacity:.8;}
+  .topic .ico{
+    width:42px;height:42px;border-radius:13px;display:grid;place-items:center;
+    background:linear-gradient(135deg,var(--candy-soft),#fff2e6);
+    margin-bottom:14px;color:var(--candy);
+  }
+  .topic h3{font-size:16.5px;font-weight:800;margin-bottom:7px;position:relative;z-index:1;}
+  .topic p{font-size:13.8px;color:var(--ink-2);position:relative;z-index:1;}
+  .topic .meta{
+    display:inline-block;margin-top:13px;font-size:12.5px;font-weight:700;
+    color:var(--candy);background:var(--candy-soft);
+    padding:3px 11px;border-radius:999px;position:relative;z-index:1;
+  }
+
+  /* ---------- feed + sidebar ---------- */
+  .split{display:grid;grid-template-columns:1fr 330px;gap:34px;align-items:start;}
+  .feed{display:flex;flex-direction:column;gap:16px;}
+  .post{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:20px 22px;transition:.2s;
+  }
+  .post:hover{border-color:#ffc9d4;box-shadow:0 12px 26px rgba(255,93,122,.09);}
+  .post .ptag{
+    display:inline-block;font-size:12px;font-weight:700;color:#c2415c;
+    background:#ffeef2;padding:2px 10px;border-radius:999px;margin-bottom:9px;
+  }
+  .post h3{font-size:16.5px;font-weight:800;line-height:1.5;margin-bottom:6px;}
+  .post p{font-size:14px;color:var(--ink-2);}
+  .post .pfoot{
+    display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;
+    font-size:12.5px;color:#9b8a94;
+  }
+
+  aside.side{display:flex;flex-direction:column;gap:18px;position:sticky;top:88px;}
+  .panel{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:20px;
+  }
+  .panel h3{font-size:15px;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:7px;}
+  .panel h3::before{content:"";width:4px;height:15px;border-radius:2px;background:linear-gradient(var(--candy),var(--peach));}
+  .hot-list{list-style:none;display:flex;flex-direction:column;gap:11px;}
+  .hot-list li{display:flex;gap:10px;font-size:13.8px;line-height:1.55;color:var(--ink-2);}
+  .hot-list .num{
+    flex-shrink:0;width:20px;height:20px;border-radius:6px;font-size:11.5px;font-weight:800;
+    display:grid;place-items:center;background:#f4edf0;color:#9b8a94;margin-top:2px;
+  }
+  .hot-list li:nth-child(1) .num{background:linear-gradient(135deg,var(--candy),var(--peach));color:#fff;}
+  .hot-list li:nth-child(2) .num{background:var(--candy-soft);color:var(--candy);}
+  .hot-list li:nth-child(3) .num{background:var(--candy-soft);color:var(--candy);}
+  .tagcloud{display:flex;flex-wrap:wrap;gap:8px;}
+  .tagcloud a{
+    font-size:12.8px;color:var(--ink-2);background:#fdf3f5;
+    padding:5px 12px;border-radius:999px;transition:.2s;
+  }
+  .tagcloud a:hover{background:var(--candy);color:#fff;}
+
+  /* ---------- about / flow ---------- */
+  .about-band{
+    background:linear-gradient(160deg,#fff 0%,#fff4f6 100%);
+    border:1px solid var(--line);border-radius:26px;
+    padding:36px clamp(20px,4vw,44px);
+  }
+  .about-band h2{font-size:clamp(20px,2.5vw,25px);font-weight:800;margin-bottom:12px;}
+  .about-band p{font-size:14.8px;color:var(--ink-2);max-width:52em;}
+  .about-band p + p{margin-top:12px;}
+  .steps{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:28px;
+  }
+  .step{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px;}
+  .step .sn{
+    font-size:12px;font-weight:800;letter-spacing:1.4px;color:var(--candy);margin-bottom:8px;
+  }
+  .step h3{font-size:15.5px;font-weight:800;margin-bottom:6px;}
+  .step p{font-size:13.6px;color:var(--ink-2);}
+
+  /* ---------- download ---------- */
+  .dl-box{
+    display:flex;gap:24px;align-items:center;justify-content:space-between;flex-wrap:wrap;
+    background:linear-gradient(100deg,#2b2027,#4a2c39 70%,#7a3a4c);
+    border-radius:24px;padding:32px clamp(20px,4vw,42px);color:#fff;
+  }
+  .dl-box h2{font-size:clamp(19px,2.4vw,24px);font-weight:800;margin-bottom:8px;}
+  .dl-box p{font-size:14px;color:#f0d9df;max-width:36em;}
+  .btn-dl{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:15px;font-weight:800;color:#fff;
+    background:linear-gradient(100deg,var(--candy),var(--peach));
+    padding:13px 30px;border-radius:999px;
+    box-shadow:0 10px 24px rgba(255,93,122,.35);
+    pointer-events:none;
+  }
+
+  /* ---------- footer ---------- */
+  footer.site{
+    border-top:1px solid var(--line);
+    padding:34px 0 40px;margin-top:16px;
+  }
+  .foot-row{display:flex;justify-content:space-between;gap:22px;flex-wrap:wrap;align-items:flex-start;}
+  .foot-brand{max-width:30em;}
+  .foot-brand .brand{
+    font-size:16px;font-weight:800;
+    background:linear-gradient(100deg,var(--candy),var(--peach));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .foot-brand p{font-size:13px;color:var(--ink-2);margin-top:8px;}
+  .foot-links{display:flex;gap:26px;flex-wrap:wrap;font-size:13px;color:var(--ink-2);}
+  .foot-links a:hover{color:var(--candy);}
+  .copyright{font-size:12.5px;color:#9b8a94;margin-top:24px;padding-top:18px;border-top:1px dashed var(--line);}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:940px){
+    .hero-grid{grid-template-columns:1fr;gap:30px;}
+    .hero-figure{order:-1;max-width:420px;}
+    .split{grid-template-columns:1fr;}
+    aside.side{position:static;}
+    .topic-grid{grid-template-columns:repeat(2,1fr);}
+    .steps{grid-template-columns:1fr;}
+  }
+  @media (max-width:640px){
+    .nav-row{flex-wrap:wrap;gap:10px;padding:10px 0;min-height:auto;}
+    nav.main{margin-left:0;width:100%;overflow-x:auto;flex-wrap:nowrap;padding-bottom:2px;}
+    nav.main a{padding:6px 10px;font-size:13.5px;}
+    .nav-cta{margin-left:auto;}
+    .hero{padding:34px 0 30px;}
+    .hero p.lead{font-size:15px;}
+    .topic-grid{grid-template-columns:1fr;}
+    section{padding:38px 0;}
+    .post{padding:17px 16px;}
+    .dl-box{padding:26px 20px;}
+  }
+</style>
+    <script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav-row">
+    <a class="logo" href="#top" aria-label="糖心社区首页">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <defs>
+          <linearGradient id="lg1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#ff5d7a"/><stop offset="1" stop-color="#ff9770"/>
+          </linearGradient>
+        </defs>
+        <rect width="64" height="64" rx="16" fill="url(#lg1)"/>
+        <path d="M32 50C20 42 12 34 12 25a10 10 0 0 1 20-4 10 10 0 0 1 20 4c0 9-8 17-20 25z" fill="#fff" opacity=".94"/>
+        <circle cx="32" cy="26" r="4.4" fill="#ff9770" opacity=".85"/>
+      </svg>
+      <span class="brand">糖心社区</span>
+    </a>
+    <nav class="main" aria-label="主导航">
+      <a href="#topics">热门板块</a>
+      <a href="#feed">社区动态</a>
+      <a href="#hot">热门话题</a>
+      <a href="#about">社区说明</a>
+      <a href="#download">客户端下载</a>
+    </nav>
+    <a class="nav-cta" href="#feed">开始浏览</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="h1">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="badge"><i></i>社区内容持续更新中</span>
+        <h1 id="h1">糖心社区</h1>
+        <p class="lead">糖心社区是一个以内容浏览与话题讨论为核心的社区首页。这里把热门板块、社区动态和创作者更新放在同一处，方便你按兴趣翻看帖子、跟随讨论，找到想继续读下去的内容。</p>
+        <div class="hero-actions">
+          <a class="btn-primary" href="#feed">
+            浏览社区动态
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="btn-ghost" href="#topics">查看热门板块</a>
+        </div>
+      </div>
+      <div class="hero-figure">
+        <svg viewBox="0 0 360 250" role="img" aria-label="糖心社区内容卡片示意插画">
+          <defs>
+            <linearGradient id="hg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#ffe3e9"/><stop offset="1" stop-color="#fff1e6"/>
+            </linearGradient>
+            <linearGradient id="hg2" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#ff5d7a"/><stop offset="1" stop-color="#ff9770"/>
+            </linearGradient>
+          </defs>
+          <rect x="0" y="0" width="360" height="250" rx="16" fill="url(#hg)"/>
+          <rect x="22" y="24" width="196" height="88" rx="12" fill="#fff"/>
+          <rect x="38" y="42" width="86" height="9" rx="4.5" fill="url(#hg2)"/>
+          <rect x="38" y="60" width="152" height="7" rx="3.5" fill="#f2dfe4"/>
+          <rect x="38" y="75" width="126" height="7" rx="3.5" fill="#f2dfe4"/>
+          <rect x="38" y="90" width="54" height="7" rx="3.5" fill="#ffd2dc"/>
+          <rect x="232" y="24" width="106" height="88" rx="12" fill="#fff"/>
+          <circle cx="262" cy="52" r="13" fill="url(#hg2)" opacity=".8"/>
+          <rect x="248" y="74" width="74" height="7" rx="3.5" fill="#f2dfe4"/>
+          <rect x="248" y="89" width="52" height="7" rx="3.5" fill="#ffd2dc"/>
+          <rect x="22" y="128" width="120" height="96" rx="12" fill="#fff"/>
+          <rect x="38" y="146" width="88" height="7" rx="3.5" fill="#f2dfe4"/>
+          <rect x="38" y="161" width="66" height="7" rx="3.5" fill="#f2dfe4"/>
+          <rect x="38" y="182" width="40" height="22" rx="11" fill="url(#hg2)" opacity=".85"/>
+          <rect x="156" y="128" width="120" height="96" rx="12" fill="#fff"/>
+          <rect x="172" y="146" width="88" height="7" rx="3.5" fill="#f2dfe4"/>
+          <rect x="172" y="161" width="58" height="7" rx="3.5" fill="#f2dfe4"/>
+          <circle cx="186" cy="198" r="9" fill="#ffd2dc"/>
+          <circle cx="208" cy="198" r="9" fill="#ffe0c8"/>
+          <rect x="290" y="128" width="48" height="96" rx="12" fill="#fff"/>
+          <rect x="302" y="148" width="24" height="7" rx="3.5" fill="#f2dfe4"/>
+          <rect x="302" y="163" width="16" height="7" rx="3.5" fill="#ffd2dc"/>
+        </svg>
+        <div class="hero-note">
+          <div><strong>热门板块</strong>分类浏览内容</div>
+          <div><strong>社区动态</strong>帖子与讨论</div>
+          <div><strong>创作者</strong>更新提醒</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOPICS -->
+  <section id="topics" aria-labelledby="topics-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="kicker">Topics</div>
+        <h2 id="topics-h">糖心社区热门板块</h2>
+        <p>板块是糖心社区组织内容的基本单位。每个板块聚合同类帖子，方便你从感兴趣的方向进入，而不是在信息流里无序翻找。</p>
+      </div>
+      <div class="topic-grid">
+        <article class="topic">
+          <div class="ico" aria-hidden="true">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></svg>
+          </div>
+          <h3>热点速览</h3>
+          <p>当日讨论度较高的帖子集中在这里，适合想快速了解社区近期关注点的访客。</p>
+          <span class="meta">实时聚合</span>
+        </article>
+        <article class="topic">
+          <div class="ico" aria-hidden="true">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h3>话题讨论</h3>
+          <p>围绕一个具体问题展开的楼层式讨论，适合愿意参与表达、看不同观点的人。</p>
+          <span class="meta">多观点</span>
+        </article>
+        <article class="topic">
+          <div class="ico" aria-hidden="true">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+          </div>
+          <h3>创作者动态</h3>
+          <p>关注作者的最新发布，按人而非按话题浏览，适合有固定阅读偏好的用户。</p>
+          <span class="meta">持续更新</span>
+        </article>
+        <article class="topic">
+          <div class="ico" aria-hidden="true">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M8 4v16"/></svg>
+          </div>
+          <h3>图文分享</h3>
+          <p>以图片与短文为主的内容板块，阅读负担小，适合碎片时间随手浏览。</p>
+          <span class="meta">轻阅读</span>
+        </article>
+        <article class="topic">
+          <div class="ico" aria-hidden="true">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>
+          </div>
+          <h3>经验互助</h3>
+          <p>提问与解答类帖子，社区成员围绕具体场景交换做法，内容偏实用。</p>
+          <span class="meta">问答向</span>
+        </article>
+        <article class="topic">
+          <div class="ico" aria-hidden="true">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          </div>
+          <h3>新帖捞新</h3>
+          <p>刚发布不久、尚未积累热度的内容入口，适合愿意先一步留言互动的访客。</p>
+          <span class="meta">新鲜内容</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEED + SIDEBAR -->
+  <section id="feed" aria-labelledby="feed-h">
+    <div class="wrap split">
+      <div>
+        <div class="sec-head">
+          <div class="kicker">Feed</div>
+          <h2 id="feed-h">糖心社区社区动态</h2>
+          <p>以下为糖心社区内容流的展示样式，按发布时间与讨论热度混合排列，覆盖不同板块的代表性帖子。</p>
+        </div>
+        <div class="feed">
+          <article class="post">
+            <span class="ptag">热点速览</span>
+            <h3>本周社区讨论集中的几个方向</h3>
+            <p>从近期发帖看，生活记录类与经验互助类内容互动最活跃。帖子多以短段落加图片的形式呈现，回帖更偏向补充细节而非争论。</p>
+            <div class="pfoot"><span>发布于热点速览</span><span>回帖持续增加</span></div>
+          </article>
+          <article class="post">
+            <span class="ptag">话题讨论</span>
+            <h3>一个话题怎样在社区里被讨论起来</h3>
+            <p>通常由一条提出具体问题的帖子起头，前几条回复确定讨论范围，后续楼层再补充各自经历。糖心社区的话题页会把主帖与回复按时间排列。</p>
+            <div class="pfoot"><span>发布于话题讨论</span><span>多观点并列</span></div>
+          </article>
+          <article class="post">
+            <span class="ptag">创作者动态</span>
+            <h3>关注作者后，更新会出现在哪里</h3>
+            <p>关注列表与板块内容流是两条并行路径。前者按人聚合，后者按主题聚合，糖心社区首页同时保留这两个入口，便于在不同浏览习惯间切换。</p>
+            <div class="pfoot"><span>发布于创作者动态</span><span>按人聚合</span></div>
+          </article>
+          <article class="post">
+            <span class="ptag">经验互助</span>
+            <h3>提问帖怎么写更容易得到有效回复</h3>
+            <p>把背景、已尝试的做法和具体卡点分开写清楚，回复往往更聚焦。社区里被反复引用的高质量回答，大多来自信息交代完整的提问。</p>
+            <div class="pfoot"><span>发布于经验互助</span><span>实用向</span></div>
+          </article>
+        </div>
+      </div>
+
+      <aside class="side">
+        <div class="panel" id="hot">
+          <h3>热门话题</h3>
+          <ul class="hot-list">
+            <li><span class="num">1</span><span>本周社区讨论方向盘点</span></li>
+            <li><span class="num">2</span><span>经验互助板块的提问方式</span></li>
+            <li><span class="num">3</span><span>创作者更新的关注与提醒</span></li>
+            <li><span class="num">4</span><span>图文分享的轻阅读体验</span></li>
+            <li><span class="num">5</span><span>新帖捞新与早期互动</span></li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>常用标签</h3>
+          <div class="tagcloud">
+            <a href="#topics">热点速览</a>
+            <a href="#topics">话题讨论</a>
+            <a href="#topics">创作者动态</a>
+            <a href="#topics">图文分享</a>
+            <a href="#topics">经验互助</a>
+            <a href="#topics">新帖捞新</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" aria-labelledby="about-h">
+    <div class="wrap">
+      <div class="about-band">
+        <h2 id="about-h">关于糖心社区的内容组织</h2>
+        <p>糖心社区把内容按板块、话题与作者三条线索组织。板块解决「我想看哪一类」，话题解决「我想看这个问题怎么被讨论」，作者线索解决「我想跟着谁读」。三条线索互不替代，首页把它们并列呈现，访问者可按当下目的选择入口。</p>
+        <p>页面上出现的板块名称、动态条目与话题列表，用于说明糖心社区的内容结构。具体帖子数量、更新时间与互动数据以站内实际显示为准。阅读时建议先确定目的再选入口，比在内容流中逐条翻找更省时间。</p>
+        <div class="steps">
+          <div class="step">
+            <div class="sn">STEP 01</div>
+            <h3>选板块</h3>
+            <p>从热门板块进入，先锁定内容类型，再决定是否深入阅读。</p>
+          </div>
+          <div class="step">
+            <div class="sn">STEP 02</div>
+            <h3>看话题</h3>
+            <p>在话题页阅读主帖与回复，了解同一问题的不同处理方式。</p>
+          </div>
+          <div class="step">
+            <div class="sn">STEP 03</div>
+            <h3>跟作者</h3>
+            <p>关注固定创作者，后续更新按人聚合，减少重复筛选。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOWNLOAD -->
+  <section id="download" aria-labelledby="dl-h">
+    <div class="wrap">
+      <div class="dl-box">
+        <div>
+          <h2 id="dl-h">糖心社区客户端</h2>
+          <p>客户端用于在移动端浏览板块与话题，并把关注作者的更新集中提醒。下载入口准备就绪后将在此处开放。</p>
+        </div>
+        <a class="btn-dl" href="#" data-download-placeholder="true" aria-disabled="true" tabindex="-1">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 11l5 5 5-5M5 21h14"/></svg>
+          下载
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-row">
+      <div class="foot-brand">
+        <span class="brand">糖心社区</span>
+        <p>聚合热门板块、社区动态与创作者更新的浏览型社区首页，帮助访问者按兴趣找到内容与讨论入口。</p>
+      </div>
+      <div class="foot-links">
+        <a href="#topics">热门板块</a>
+        <a href="#feed">社区动态</a>
+        <a href="#hot">热门话题</a>
+        <a href="#about">社区说明</a>
+        <a href="#download">客户端下载</a>
+      </div>
+    </div>
+    <div class="copyright">© 糖心社区 · 页面内容用于展示社区信息结构，具体数据以站内实际显示为准。</div>
+  </div>
+</footer>
+
+</body>
+          </html>
